@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios';
+import Axios from "../../Axios/axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
@@ -23,7 +23,7 @@ const Register = () => {
             return;
           }
         
-        Axios.post('http://localhost:3002/api/auth/register', {
+        Axios.post('/auth/register', {
             
           email: email,
           name: name,  

@@ -3,6 +3,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Notification from "./components/notification/Notification";
 import Feed from "./components/post/Feed";
+import Profile from "./components/post/Profile";
 import './App.css';
 
 export default function App() {
@@ -13,8 +14,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login/>} />
           <Route path="/register" element={<Register />} />
-          <Route path="/:email/notification" element={<Notification />} />
-          <Route path="/:email" element={< Feed />} />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/feed" element={< Feed />} />
+          <Route path="/profile" element={< Profile />} />
           </Routes>
 
       </BrowserRouter>

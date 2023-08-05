@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios';
+import Axios from "../../Axios/axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
@@ -14,6 +14,7 @@ const Login = () => {
 
   React.useEffect(() => {
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("email");
   }, []);
 
 
@@ -25,7 +26,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    Axios.post('http://localhost:3002/api/auth/login',
+    Axios.post('/auth/login',
       {
         email: email,
         password: password,
@@ -36,27 +37,15 @@ const Login = () => {
                   }
         else {
        
-          localStorage.setItem("accessToken", (response.data));
-
-          Axios.get("http://localhost:3002/api/auth/", {
-            headers: {
-              accessToken: localStorage.getItem("accessToken")
-              
-            }
-          }).then((response) => {
-            console.log(response.data);
-            navigate(`/${response.data.email}`); 
-            
-          });
+          localStorage.setItem("accessToken", (response.data.token));
+          localStorage.setItem("email", (response.data.email));
+          navigate(`/feed`);
         }
       });
-      Axios.post(`http://localhost:3002/api/notification/createNotification`).then(response => {
+      Axios.post(`/notification/createNotification`).then(response => {
         console.log("hi");
       });
   }
-  useEffect(() => {
-    localStorage.removeItem("accessToken");
-  }, []);
 
   return <div>
     <HomeNavbar />

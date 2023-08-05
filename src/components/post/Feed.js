@@ -2,17 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios';
+import Axios from "../../Axios/axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams } from 'react-router-dom';
 import './Feed.css';
 import MyNavbar from '../../components/Navbar';
 
 const PostCard = ({ email, content, imageUrl }) => {
 
-  const imageBaseUrl = 'http://localhost:9000/distributed';
-  const fullImageUrl = imageUrl ? `${imageBaseUrl}/${imageUrl}` : null;
+  const fullImageUrl = imageUrl ? `${imageUrl}` : null;
  // console.log(fullImageUrl);
   return (
     <div className="post-card">
@@ -25,26 +23,43 @@ const PostCard = ({ email, content, imageUrl }) => {
 };
 
 const Feed = () => {
-  const { email } = useParams();
+
   const [posts, setPosts] = useState('');
-  const [authState, setAuthState] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const email = localStorage.getItem('email');
+    useEffect(() => {
+
+    const token = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+          Authorization: 'Bearer ' + token,
+      }
+  }
+    Axios.get('/post/getPost' ,config)
+      .then((response) => {
+        if (Array.isArray(response.data.response)) { setPostInformation(response.data.response); }
+
+      })
+
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'multipart/form-data', 
+      },
+    };
+  
 
     const formData = new FormData();
     formData.append('email', email);
     formData.append('posts', posts);
     formData.append('image', imageFile);
 
-    Axios.post('http://localhost:3002/api/post/post', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    Axios.post('/post/post', formData, config)
       .then((response) => {
         toast.success('Post given!');
       })
@@ -54,42 +69,14 @@ const Feed = () => {
   };
 
   const [postInformation, setPostInformation] = useState([]);
-  useEffect(() => {
-    Axios.get('http://localhost:3002/api/post/getPost')
-      .then((response) => {
-        if (Array.isArray(response.data.response)) { setPostInformation(response.data.response); }
 
-      })
-
-  }, []);
   const sortedPosts = postInformation.sort((a, b) => b._id.localeCompare(a._id));
 
-  const authenticate = (email) => {
-    Axios.get("http://localhost:3002/api/auth/", {
-      headers: {
-        accessToken: localStorage.getItem("accessToken")
 
-      }
-    }).then((response) => {
-      if (response.data.error) {
-        setAuthState(false);
-      } else {
-        console.log(response.data.email);
-        if (response.data.email == email) {
-          setAuthState(true);
-        }
-      }
-    });
-  }
 
-  useEffect(() => {
-    authenticate(email);
-  }, []);
 
   return (
-    <>
-      {
-        authState && (
+    
           <div>
             <MyNavbar />
             <div className="status-feed">
@@ -130,9 +117,8 @@ const Feed = () => {
 
             </div>
           </div>
-        )
-      }
-    </>
+        
+      
   );
 };
 

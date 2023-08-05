@@ -9,7 +9,6 @@ import { useParams, Link } from 'react-router-dom';
 const MyNavbar = () => {
 
   const [showAlert, setShowAlert] = useState(false);
-  const { email } = useParams();
   const handleLinkedInClick = () => {
    
     window.scrollTo(0, 0);
@@ -28,11 +27,12 @@ const MyNavbar = () => {
  return  <div>
   <Navbar bg="light" variant="light" expand="lg" >
       {/* <Navbar.Brand as={Link} to={`/${email}`}><b>Linked In </b> </Navbar.Brand> */}
-      <Navbar.Brand as={Link} to={`/${email}`} onClick={handleLinkedInClick}><b>Linked In </b> </Navbar.Brand>
+      <Navbar.Brand as={Link} to={`/feed`} onClick={handleLinkedInClick}><b>Linked In </b> </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse  className="justify-content-end">
         <Nav className="mr-auto">
-        <Nav.Link as={Link} to={`/${email}/notification`} onClick={handleLinkedInClick}>Notification</Nav.Link>
+        <Nav.Link as={Link} to={`/profile`}>Profile</Nav.Link>
+        <Nav.Link as={Link} to={`/notification`} onClick={handleLinkedInClick}>Notification</Nav.Link>
           <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
         </Nav>
       </Navbar.Collapse>
