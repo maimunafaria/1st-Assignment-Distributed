@@ -5,8 +5,8 @@ const minioClient = new Minio.Client({
   endPoint: 'localhost',
   port: 9000,
   useSSL: false,
-  accessKey: '',
-  secretKey: '',
+  accessKey: 'qgGNF6kUdoenCVtDpHVd',
+  secretKey: 'B3VSO1q6nDfhmLrWLgJdJ1tO8G5fr9V94V3e7KI0',
 });
 
 
@@ -38,9 +38,9 @@ const post = (req, res, next) => {
       'Content-Type': req.file.mimetype,
     };
   
-    const bucketName = 'distributed'; 
+    const bucketName = 'linkedin'; 
     const objectName = req.file.originalname;
-  
+  console.log("HIO")
     
     minioClient.fPutObject(bucketName, objectName, filePath, metaData, (err, etag) => {
       if (err) {
@@ -48,11 +48,11 @@ const post = (req, res, next) => {
         return res.json({ message: 'Error' });
       }
      
-    
+      console.log("HIOsfgv")
       let post = new Post({
         email: req.body.email,
         posts: req.body.posts,
-        imageUrl: `http://localhost:9000/distributed/`+objectName, 
+        imageUrl: `http://localhost:9000/linkedin/`+objectName, 
       });
       console.log("hoy ki?")
       post.save()
