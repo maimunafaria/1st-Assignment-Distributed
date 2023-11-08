@@ -3,12 +3,10 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors');
-const AuthRoute = require('./routes/auth')
-const PostRoute = require('./routes/post')
 const NotificationRoute = require('./routes/notification')
 const notificationJob = require('./controllers/notificationScheduler');
 
-mongoose.connect('mongodb://localhost:27017/distributed',{useNewUrlParser: true, useUnifiedTopology:true})
+mongoose.connect('mongodb://notification_db:27017/notificationdb',{useNewUrlParser: true, useUnifiedTopology:true})
 
 const db= mongoose.connection
 
@@ -27,12 +25,10 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-const PORT = process.env.Port || 3002
+const PORT = process.env.Port || 3012
 
 app.listen(PORT,()=>{
     console.log(`Server is running ${PORT}`)
 })
-app.use('/', AuthRoute)
-app.use('/', PostRoute)
 app.use('/', NotificationRoute)
 notificationJob.start();

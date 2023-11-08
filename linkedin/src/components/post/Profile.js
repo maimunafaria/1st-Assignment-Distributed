@@ -35,7 +35,7 @@ const Post= () => {
           Authorization: 'Bearer ' + token,
       }
   }
-    Axios.get('/post/getPost' ,config)
+    Axios.get('/getPost' ,config)
       .then((response) => {
         if (Array.isArray(response.data.response)) { setPostInformation(response.data.response); }
 
@@ -59,7 +59,7 @@ const Post= () => {
     formData.append('posts', posts);
     formData.append('image', imageFile);
 
-    Axios.post('/post/post', formData, config)
+    Axios.post('/post', formData, config)
       .then((response) => {
         toast.success('Post given!');
       })

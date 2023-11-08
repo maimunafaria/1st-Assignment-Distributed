@@ -1,0 +1,80 @@
+version: '3.4'
+
+services:
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - postservice
+      - userservice
+  userservice:
+    image: userservice
+    build:
+      context: ./distributed_servers/user_server
+    ports:
+      - "3010:3010"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - user_db
+
+  user_db:
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - user-data:/data/db
+
+  post_db:
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - post-data:/data/db
+
+  notification_db:
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - notification-data:/data/db
+
+  notificationservice:
+    image: notificationservice
+    build:
+      context: ./distributed_servers/notification_server
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3012:3012"
+    depends_on:
+      - notification_db
+
+  postservice:
+    image: postservice
+    build:
+      context: ./distributed_servers/post_server
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3011:3011"
+    depends_on:
+      - post_db
+      - minio
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+      - 9090:9090
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9090"
+    volumes:
+      - ~/minio/data:/data
+volumes:
+  user-data:
+  post-data:
+  notification-data:

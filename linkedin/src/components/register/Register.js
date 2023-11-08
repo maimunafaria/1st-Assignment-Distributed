@@ -23,7 +23,7 @@ const Register = () => {
             return;
           }
         
-        Axios.post('/auth/register', {
+        Axios.post('/register', {
             
           email: email,
           name: name,  

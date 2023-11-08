@@ -18,9 +18,9 @@ const HomeNavbar = () => {
       </Navbar.Collapse>
 
       </Navbar>
-  <section class="footer" >
+  <section className="footer" >
         <div >
-          <div class="col-lg-2">
+          <div className="col-lg-2">
             <p >© Copyrights 1222 </p>
           </div>
         </div>

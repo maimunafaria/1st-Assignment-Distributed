@@ -3,7 +3,7 @@ const fs = require('fs');
 const Post = require('../models/Post');
 const minioClient = new Minio.Client({
   endPoint: 'localhost',
-  port: 9010,
+  port: 9000,
   useSSL: false,
   accessKey: 'qgGNF6kUdoenCVtDpHVd',
   secretKey: 'B3VSO1q6nDfhmLrWLgJdJ1tO8G5fr9V94V3e7KI0',
@@ -48,13 +48,11 @@ const post = (req, res, next) => {
         return res.json({ message: 'Error' });
       }
      
-      console.log("HIOsfgv")
       let post = new Post({
         email: req.body.email,
         posts: req.body.posts,
         imageUrl: `http://localhost:9000/linkedin/`+objectName, 
       });
-      console.log("hoy ki?")
       post.save()
         .then(response => {
           res.json({

@@ -26,7 +26,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    Axios.post('/auth/login',
+    Axios.post('/login',
       {
         email: email,
         password: password,
@@ -42,7 +42,7 @@ const Login = () => {
           navigate(`/feed`);
         }
       });
-      Axios.post(`/notification/createNotification`).then(response => {
+      Axios.post(`/createNotification`).then(response => {
         console.log("hi");
       });
   }

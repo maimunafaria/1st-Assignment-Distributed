@@ -26,7 +26,7 @@ const Notification = () => {
         Authorization: 'Bearer ' + token,
       }
     }
-    Axios.get('/notification/getNotification', config)
+    Axios.get('/getNotification', config)
       .then((response) => {
         if (Array.isArray(response.data.response)) {
           setNotificationInformation(response.data.response);
@@ -44,7 +44,7 @@ const Notification = () => {
     const notification = notificationInformation[index];
     const id = notification._id;
     console.log(id);
-    Axios.put('/notification/approve', { id: id }, config).then((response) => {
+    Axios.put('/approve', { id: id }, config).then((response) => {
       if (response.status === 200) {
         const updatedNotificationInformation = [...notificationInformation];
         updatedNotificationInformation.splice(index, 1);

@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  userservice:
+    image: userservice
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3010:3010
+    environment:
+      MONGO_INITDB_DATABASE: userdb
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27020:27017"
+    volumes:
+      - user-data:/data/db
+
+volumes:
+  user-data:
