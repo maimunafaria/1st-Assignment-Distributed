@@ -2,49 +2,50 @@
 const Notification = require('../models/Notification');
 // const Post = require('../models/Post');
 const mongoose = require('mongoose')
-const userService = require('../../user_server'); // Import the User service
-const postService = require('../../post_server'); 
+// const userService = require('../../user_server'); 
+// const postService = require('../../post_server'); 
+
 
 async function createNotifications() {
-  try {
-    // const posts = await Post.find();
-    const posts = await postService.getPosts(); 
-    const users = await userService.getUsers();
-    for (const post of posts) {
-      if (!post.createdNotification) {
-     // const users = await User.find();
-      const postGiverEmail = post.email;
-      const postss = post.posts;
-      const imageurl =post.imageUrl;
-      const createdPost = post.createdNotification;
-      for (const user of users) {
-        if (user.email !== postGiverEmail) {
-          const notificationExists = await Notification.exists({
-            email: user.email,
-            posts: postss,
-            postEmail: postGiverEmail,
-            image: imageurl
-          });
+//   try {
+//     // const posts = await Post.find();
+//     const posts = await postService.getPosts(); 
+//     const users = await userService.getUsers();
+//     for (const post of posts) {
+//       if (!post.createdNotification) {
+//      // const users = await User.find();
+//       const postGiverEmail = post.email;
+//       const postss = post.posts;
+//       const imageurl =post.imageUrl;
+//       const createdPost = post.createdNotification;
+//       for (const user of users) {
+//         if (user.email !== postGiverEmail) {
+//           const notificationExists = await Notification.exists({
+//             email: user.email,
+//             posts: postss,
+//             postEmail: postGiverEmail,
+//             image: imageurl
+//           });
 
-          if (!notificationExists) {
-            await Notification.create({
-              email: user.email,
-              postEmail: postGiverEmail,
-              image: imageurl,
-              posts: post.posts,
-              ifChecked: false,
-            });
-          }
-        }
-      }
-      post.createdNotification = true;
-        await post.save();
-    }
+//           if (!notificationExists) {
+//             await Notification.create({
+//               email: user.email,
+//               postEmail: postGiverEmail,
+//               image: imageurl,
+//               posts: post.posts,
+//               ifChecked: false,
+//             });
+//           }
+//         }
+//       }
+//       post.createdNotification = true;
+//         await post.save();
+//     }
     
-  }
- } catch (error) {
-    console.error('Error', error);
-  }
+//   }
+//  } catch (error) {
+//     console.error('Error', error);
+//   }
 }
 async function createNotificationsForUsers(req, res) {
   try {

@@ -40,16 +40,6 @@ services:
     volumes:
       - notification-data:/data/db
 
-  notificationservice:
-    image: notificationservice
-    build:
-      context: ./distributed_servers/notification_server
-    environment:
-      NODE_ENV: production
-    ports:
-      - "3012:3012"
-    depends_on:
-      - notification_db
 
   postservice:
     image: postservice
@@ -63,6 +53,16 @@ services:
       - post_db
       - minio
 
+  notificationservice:
+    image: notificationservice
+    build:
+      context: ./distributed_servers/notification_server
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3012:3012"
+    depends_on:
+      - notification_db
   minio:
     image: minio/minio:latest
     ports:

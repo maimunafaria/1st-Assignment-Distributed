@@ -25,6 +25,6 @@ services:
     environment:
       - MINIO_ACCESS_KEY='qgGNF6kUdoenCVtDpHVd'
       - MINIO_SECRET_KEY='B3VSO1q6nDfhmLrWLgJdJ1tO8G5fr9V94V3e7KI0'
-    command: server --address 0.0.0.0:9000 /data
+    command: server --address localhost:9000 /data
 volumes:
   post-data:

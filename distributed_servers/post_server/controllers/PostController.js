@@ -27,6 +27,7 @@ const post = (req, res, next) => {
         })
         .catch(error => {
             console.log(error); 
+            console.log(("HI"))
             return res.json({ message: 'An error occurred' });
         });
         
@@ -41,10 +42,11 @@ const post = (req, res, next) => {
     const bucketName = 'linkedin'; 
     const objectName = req.file.originalname;
   console.log("HIO")
-    
+  console.log("bysdfge")
     minioClient.fPutObject(bucketName, objectName, filePath, metaData, (err, etag) => {
       if (err) {
         console.log(err);
+        console.log("HIhuio")
         return res.json({ message: 'Error' });
       }
      
@@ -60,6 +62,7 @@ const post = (req, res, next) => {
           });
         })
         .catch(error => {
+          console.log("dfsxjohn")
           console.log(error);
           res.json({ message: 'An error occurred' });
         });
@@ -71,6 +74,7 @@ const post = (req, res, next) => {
         }
       });
     });
+    console.log("bye")
   };
 const getPost = (req, res, next) => {
   Post.find()
