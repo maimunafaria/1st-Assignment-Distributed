@@ -90,7 +90,18 @@ const getPost = (req, res, next) => {
     });
 };
 
+// const changeCreatedPostStatus = async (req, res) => {
+//   const id = req.body.id;
+//   const objectId = new mongoose.Types.ObjectId(id);
+//    // console.log(objectId);
+//     const approveData = await Post.updateOne(
+//       { _id: objectId},
+//      { $set: { createdNotification: true } }
+//     );res.json(approveData)
+// };
+
 module.exports = {
   post,
   getPost,
+  // changeCreatedPostStatus,
 };

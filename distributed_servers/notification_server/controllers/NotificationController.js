@@ -39,7 +39,7 @@ async function createNotifications() {
           }
         }
 
-        // const data= await axios.put("http://postservice:3011/status", { id: post._id });
+        // const data= await axios.put("http://postservice:3011/changeCreatedPostStatus", { id: post._id });
         // console.log(data);
       }
     }
