@@ -1,52 +1,54 @@
 // const User = require('../models/User');
 const Notification = require('../models/Notification');
-// const Post = require('../models/Post');
+const axios = require('axios');
 const mongoose = require('mongoose')
 // const userService = require('../../user_server'); 
 // const postService = require('../../post_server'); 
 
-
 async function createNotifications() {
-//   try {
-//     // const posts = await Post.find();
-//     const posts = await postService.getPosts(); 
-//     const users = await userService.getUsers();
-//     for (const post of posts) {
-//       if (!post.createdNotification) {
-//      // const users = await User.find();
-//       const postGiverEmail = post.email;
-//       const postss = post.posts;
-//       const imageurl =post.imageUrl;
-//       const createdPost = post.createdNotification;
-//       for (const user of users) {
-//         if (user.email !== postGiverEmail) {
-//           const notificationExists = await Notification.exists({
-//             email: user.email,
-//             posts: postss,
-//             postEmail: postGiverEmail,
-//             image: imageurl
-//           });
+  try {
+    const postsResponse = await axios.get("http://postservice:3011/getPost");
+    const usersResponse = await axios.get("http://userservice:3010/getUser");
+    const posts = postsResponse.data.response;
+    const users = usersResponse.data.response;
 
-//           if (!notificationExists) {
-//             await Notification.create({
-//               email: user.email,
-//               postEmail: postGiverEmail,
-//               image: imageurl,
-//               posts: post.posts,
-//               ifChecked: false,
-//             });
-//           }
-//         }
-//       }
-//       post.createdNotification = true;
-//         await post.save();
-//     }
-    
-//   }
-//  } catch (error) {
-//     console.error('Error', error);
-//   }
+    for (const post of posts) {
+      if (!post.createdNotification) {
+        const postGiverEmail = post.email;
+        const postss = post.posts;
+        const imageurl = post.imageUrl;
+
+        for (const user of users) {
+          if (user.email !== postGiverEmail) {
+            const notificationExists = await Notification.exists({
+              email: user.email,
+              posts: postss,
+              postEmail: postGiverEmail,
+              image: imageurl
+            });
+
+            if (!notificationExists) {
+              await Notification.create({
+                email: user.email,
+                postEmail: postGiverEmail,
+                image: imageurl,
+                posts: post.posts,
+                ifChecked: false,
+              });
+            }
+          }
+        }
+
+        // const data= await axios.put("http://postservice:3011/status", { id: post._id });
+        // console.log(data);
+      }
+    }
+  } catch (error) {
+    console.error('Error', error);
+  }
 }
+
+
 async function createNotificationsForUsers(req, res) {
   try {
     await createNotifications();

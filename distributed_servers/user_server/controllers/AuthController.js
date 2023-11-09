@@ -66,10 +66,20 @@ const login = (req, res, next) => {
         }
   })
 }
-async function getUsers() {
-  return User.find();
-}
 
+const getUsers= (req, res, next) => {
+  User.find()
+    .then(response => {
+      res.json({
+        response,
+      });
+    })
+    .catch(error => {
+      res.json({
+        message: 'An error occurred!',
+      });
+    });
+};
 
 module.exports={
    register,login,getUsers

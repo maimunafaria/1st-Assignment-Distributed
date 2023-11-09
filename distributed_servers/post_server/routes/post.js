@@ -6,6 +6,6 @@ const authentication = require("../middleware/Authentication");
 const PostController = require('../controllers/PostController')
 
 router.post('/post',authentication, upload.single('image'), PostController.post)
-router.get('/getPost',authentication, PostController.getPost)
+router.get('/getPost', PostController.getPost)
 
 module.exports = router
