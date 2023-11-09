@@ -2,11 +2,11 @@ const Minio = require('minio');
 const fs = require('fs');
 const Post = require('../models/Post');
 const minioClient = new Minio.Client({
-  endPoint: 'localhost',
+  endPoint: 'minio',
   port: 9000,
   useSSL: false,
-  accessKey: 'qgGNF6kUdoenCVtDpHVd',
-  secretKey: 'B3VSO1q6nDfhmLrWLgJdJ1tO8G5fr9V94V3e7KI0',
+  accessKey: '8us8geNDQPWyqzwaUijl',
+  secretKey: 'oaIVOtzdhoRprQeqk2tzLwHphxqFKK0GBdQcj8P3',
 });
 
 
@@ -53,7 +53,7 @@ const post = (req, res, next) => {
       let post = new Post({
         email: req.body.email,
         posts: req.body.posts,
-        imageUrl: `http://localhost:9000/linkedin/`+objectName, 
+        imageUrl: `http://127.0.0.1:9000/linkedin/`+objectName, 
       });
       post.save()
         .then(response => {

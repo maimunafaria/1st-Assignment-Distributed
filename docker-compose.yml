@@ -52,7 +52,7 @@ services:
     depends_on:
       - post_db
       - minio
-
+      
   notificationservice:
     image: notificationservice
     build:
