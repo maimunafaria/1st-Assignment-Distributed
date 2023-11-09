@@ -39,8 +39,8 @@ async function createNotifications() {
           }
         }
 
-        // const data= await axios.put("http://postservice:3011/changeCreatedPostStatus", { id: post._id });
-        // console.log(data);
+        const data= await axios.put("http://postservice:3011/changeCreatedPostStatus", { id: post._id });
+      //  console.log(data);
       }
     }
   } catch (error) {
@@ -74,7 +74,8 @@ const getNotification =(req,res,next)=>{
 const approve = async (req, res) => {
   const id = req.body.id;
   const objectId = new mongoose.Types.ObjectId(id);
-   // console.log(objectId);
+  // console.log("O:",id);
+  //   console.log(objectId);
     const approveData = await Notification.updateOne(
       { _id: objectId},
      { $set: { ifChecked: true } }

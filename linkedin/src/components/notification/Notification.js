@@ -35,6 +35,7 @@ const Notification = () => {
       })
 
   }, []);
+
   const handleRemoveNotification = async (index) => {
     const config = {
       headers: {
@@ -42,6 +43,8 @@ const Notification = () => {
       }
     }
     const notification = notificationInformation[index];
+   
+
     const id = notification._id;
     console.log(id);
     Axios.put('/approve', { id: id }, config).then((response) => {
@@ -104,6 +107,8 @@ const Notification = () => {
                 ) : null;
               }
               )}
+              
+              
           </tbody>
         </table>
       </div>

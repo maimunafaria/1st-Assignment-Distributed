@@ -1,5 +1,6 @@
 const Minio = require('minio');
 const fs = require('fs');
+const mongoose = require('mongoose')
 const Post = require('../models/Post');
 const minioClient = new Minio.Client({
   endPoint: 'minio',
@@ -90,18 +91,20 @@ const getPost = (req, res, next) => {
     });
 };
 
-// const changeCreatedPostStatus = async (req, res) => {
-//   const id = req.body.id;
-//   const objectId = new mongoose.Types.ObjectId(id);
-//    // console.log(objectId);
-//     const approveData = await Post.updateOne(
-//       { _id: objectId},
-//      { $set: { createdNotification: true } }
-//     );res.json(approveData)
-// };
+const changeCreatedPostStatus = async (req, res) => {
+  const id = req.body.id;
+  const objectId = new mongoose.Types.ObjectId(id);
+  // console.log("O:",id);
+  //   console.log(objectId);
+    const approveData = await Post.updateOne(
+      { _id: id},
+     { $set: { createdNotification: true } }
+    );res.json(approveData)
+ 
+};
 
 module.exports = {
   post,
   getPost,
-  // changeCreatedPostStatus,
+  changeCreatedPostStatus,
 };
