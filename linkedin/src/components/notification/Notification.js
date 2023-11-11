@@ -43,7 +43,7 @@ const Notification = () => {
       }
     }
     const notification = notificationInformation[index];
-   
+
 
     const id = notification._id;
     console.log(id);
@@ -57,28 +57,22 @@ const Notification = () => {
         throw new Error('Error');
       }
     })
-
-
   }
-
-
+  const [selectedUser, setSelectedUser] = useState(null);
+  const showPostDetails = (index) => {
+    setSelectedUser(notificationInformation[index]);
+    openModal();
+  };
   return (
     <>
 
       <MyNavbar />
-      <div>
-
-        <button onClick={openModal}>Open Modal</button>
-        <Modal isOpen={isModalOpen} onClose={closeModal} title="My Modal">
-          <p>This is the content of the modal.</p>
-          <button onClick={closeModal}>Close</button>
-        </Modal>
-      </div>
       <div style={{ marginTop: '150px', height: '400px', overflowY: 'auto' }}>
         <table className="table table-bordered text-center" style={{ width: '80%', margin: 'auto' }}>
           <thead className="bg-primary text-white">
             <tr>
               <th>Notification</th>
+              <th>Show Post</th>
               <th>Remove</th>
             </tr>
           </thead>
@@ -89,14 +83,17 @@ const Notification = () => {
                   <tr key={index}>
                     <td>
                       <b>
-                        <span onClick={openModal}>{user.postEmail}</span> gave the post{' '}
-                        <span onClick={openModal}>
-                          {user.posts} <img src={`${user.image}`} alt="" style={{ maxHeight: "60px", maxWidth: "60px" }} />
+                        <span onClick={() => openModal(index)}>{user.postEmail}</span> </b>gave the post: {' '}
+                        <span onClick={() => openModal(index)}>
+                          <i>"{user.posts}"</i> <img src={`${user.image}`} alt="" style={{ maxHeight: "60px", maxWidth: "60px" }} />
                         </span>
-                      </b>
-                      <Modal isOpen={isModalOpen} onClose={closeModal} title={user.postEmail}>
-                      {user.posts}<br></br> <img src={`${user.image}`} alt="" style={{ maxHeight: "400px", maxWidth: "400px" }} />
-                      </Modal>
+                      
+
+                    </td>
+                    <td>
+                      <button className="btn btn-primary" onClick={() => showPostDetails(index)}>
+                        Show Post
+                      </button>
                     </td>
                     <td>
                       <button className="btn btn-success" onClick={() => handleRemoveNotification(index)}>
@@ -105,13 +102,20 @@ const Notification = () => {
                     </td>
                   </tr>
                 ) : null;
-              }
-              )}
-              
-              
+              })}
           </tbody>
         </table>
+        <Modal isOpen={isModalOpen} onClose={closeModal} title={selectedUser ? selectedUser.postEmail : ""}>
+          {selectedUser ? (
+            <>
+              {selectedUser.posts}<br></br>
+              <img src={`${selectedUser.image}`} alt="" style={{ maxHeight: "400px", maxWidth: "400px" }} />
+            </>
+          ) : null}
+        </Modal>
       </div>
+
+
 
 
     </>

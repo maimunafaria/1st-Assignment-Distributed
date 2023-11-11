@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './modal.css'; // You can create a CSS file to style your modal
+import './modal.css'; 
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   const modalStyles = {

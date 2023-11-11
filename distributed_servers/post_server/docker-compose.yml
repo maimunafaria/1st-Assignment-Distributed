@@ -23,8 +23,8 @@ services:
   minio:
     image: minio/minio:latest
     environment:
-      - MINIO_ACCESS_KEY='8us8geNDQPWyqzwaUijl'
-      - MINIO_SECRET_KEY='oaIVOtzdhoRprQeqk2tzLwHphxqFKK0GBdQcj8P3'
+      - MINIO_ACCESS_KEY='B0P7FMRJgKcCXfxg7jSQ'
+      - MINIO_SECRET_KEY='8r43tyqICTmKfppfIa9N1YiuvwXEH2SqNpXzKIed'
     command: server --address 0.0.0.0:9000 /data
 volumes:
   post-data:
