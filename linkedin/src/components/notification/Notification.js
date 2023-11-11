@@ -87,8 +87,6 @@ const Notification = () => {
                         <span onClick={() => openModal(index)}>
                           <i>"{user.posts}"</i> <img src={`${user.image}`} alt="" style={{ maxHeight: "60px", maxWidth: "60px" }} />
                         </span>
-                      
-
                     </td>
                     <td>
                       <button className="btn btn-primary" onClick={() => showPostDetails(index)}>
